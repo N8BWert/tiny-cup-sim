@@ -4,6 +4,8 @@ use ncomm::publisher_subscriber::udp::UdpSubscriber;
 
 use crate::sim_field::field_representations::field::Field;
 
+use super::field_representations::team::Team;
+
 #[repr(C)]
 #[derive(Clone, Copy)]
 struct RobotInstruction {
@@ -82,16 +84,22 @@ impl<'a> Node for FieldNode<'a> {
 
         for blue_subscriber in self.blue_team_subscribers.iter_mut() {
             blue_subscriber.update_data();
+
+            if let Some(instruction) = blue_subscriber.data {
+                self.field.add_velocity(Team::Blue, instruction.id, (instruction.x, instruction.y));
+            }
         }
 
         for red_subscriber in self.red_team_subscribers.iter_mut() {
             red_subscriber.update_data();
+
+            if let Some(instruction) = red_subscriber.data {
+                self.field.add_velocity(Team::Red, instruction.id, (instruction.x, instruction.y));
+            }
         }
     }
 
-    fn shutdown(&mut self) {
-        
-    }
+    fn shutdown(&mut self) { }
 
     fn debug(&self) -> String {
         format!(

@@ -54,4 +54,15 @@ impl Field {
 
         self.ball.update_position(delta);
     }
+
+    pub fn add_velocity(&mut self, team: Team, robot: u8, velocity: (f64, f64)) {
+        match team {
+            Team::Blue => {
+                self.blue_team_robots.get_mut(robot as usize).unwrap().add_velocity(velocity);
+            },
+            Team::Red => {
+                self.red_team_robots.get_mut(robot as usize).unwrap().add_velocity(velocity);
+            }
+        }
+    }
 }
