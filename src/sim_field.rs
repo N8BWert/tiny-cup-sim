@@ -1,4 +1,2 @@
-pub mod robot;
-pub mod team;
-pub mod ball;
-pub mod field;
+pub mod field_node;
+pub mod field_representations;
