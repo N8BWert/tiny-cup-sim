@@ -1,1 +1,0 @@
-pub mod sim_camera_node;
