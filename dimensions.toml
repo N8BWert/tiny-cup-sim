@@ -1,0 +1,26 @@
+title = "Tiny-Cup Dimensions (mm)"
+
+[field]
+width = 1500
+length = 900
+field_bevel_radius = 28
+center_circle_radius = 150
+behind_goal_width = 200
+
+[robot]
+# might change this to 150 x 150 x 300, but I'm not sure
+max_length = 130
+max_width = 130
+max_height = 260
+
+[ball]
+radius = 30
+
+[goal]
+length = 300
+height = 300
+depth = "ball.radius"
+
+[goal_zone]
+# only the goalie is allowed in here
+radius = 150
