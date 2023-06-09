@@ -1,0 +1,56 @@
+{
+    "robots": [
+        {
+            "id": 0,
+            "team": true,
+            "height": 8.0,
+            "shape": {
+                "type": "Rectangle",
+                "length": 8.0,
+                "width": 8.0
+            }
+        }, {
+            "id": 1,
+            "team": true,
+            "height": 8.0,
+            "shape": {
+                "type": "Rectangle",
+                "length": 8.0,
+                "width": 8.0
+            }
+        }, {
+            "id": 2,
+            "team": true,
+            "height": 8.0,
+            "shape": {
+                "type": "Rectangle",
+                "length": 8.0,
+                "width": 8.0
+            }
+        }, {
+            "id": 0,
+            "team": false,
+            "height": 8.0,
+            "shape": {
+                "type": "Circle",
+                "radius": 8.0
+            }
+        }, {
+            "id": 1,
+            "team": false,
+            "height": 8.0,
+            "shape": {
+                "type": "Circle",
+                "radius": 8.0
+            }
+        }, {
+            "id": 2,
+            "team": false,
+            "height": 8.0,
+            "shape": {
+                "type": "Circle",
+                "radius": 8.0
+            }
+        }
+    ]
+}

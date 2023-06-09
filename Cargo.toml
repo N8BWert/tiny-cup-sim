@@ -7,4 +7,8 @@ edition = "2021"
 
 [dependencies]
 ncomm = "0.1.2"
+serde = "1.0.164"
+serde_derive = "1.0.164"
+serde_json = "1.0.96"
 tiny-cup-ref = "0.1.0"
+toml = "0.7.4"
