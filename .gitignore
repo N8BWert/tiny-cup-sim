@@ -11,3 +11,6 @@ target/
 
 # Ignore .vscode
 .vscode/
+
+# Ignore generated images
+images/**/*.png

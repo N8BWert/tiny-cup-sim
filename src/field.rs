@@ -1,63 +1,36 @@
-use std::fs;
-use std::process::exit;
-use toml;
+use serde_derive::Deserialize;
 
-pub mod robot;
-
-use crate::dimensions::Dimensions;
-use robot::Robot;
-
-pub struct FieldState {
-    pub dimensions: Dimensions,
-    pub blue_team_robots: Vec<Robot>,
-    pub red_team_robots: Vec<Robot>,
+#[derive(Deserialize)]
+pub struct Dimensions {
+    pub field_dimensions: FieldDimensions,
+    pub robot_max_dimensions: RobotMaxDimensions,
+    pub ball_dimensions: BallDimensions,
+    pub goal_dimensions: GoalDimensions,
 }
 
-impl FieldState {
-    pub fn new() -> Self {
-        let filename = "dimensions.toml";
+#[derive(Deserialize)]
+pub struct FieldDimensions {
+    pub width: f32,
+    pub length: f32,
+    pub corner_radius: f32,
+    pub center_circle_radius: f32,
+}
 
-        let contents = match fs::read_to_string(filename) {
-            Ok(file) => file,
-            Err(_) => {
-                eprintln!("Could not read file {}", filename);
-                exit(1);
-            }
-        };
+#[derive(Deserialize)]
+pub struct RobotMaxDimensions {
+    pub max_length: f32,
+    pub max_width: f32,
+    pub max_height: f32,
+}
 
-        let dimensions: Dimensions = match toml::from_str(contents.as_str()) {
-            Ok(dimensions) => dimensions,
-            Err(_) => {
-                eprintln!("Unable to load data from {}", filename);
-                exit(1);
-            }
-        };
+#[derive(Deserialize)]
+pub struct BallDimensions {
+    pub radius: f32,
+}
 
-        let filename = "robots.json";
-
-        let contents = match fs::read_to_string(filename) {
-            Ok(file) => file,
-            Err(_) => {
-                eprintln!("Could not read file {}", filename);
-                exit(1);
-            }
-        };
-
-        let robots: crate::Robots = match serde_json::from_str(contents.as_str()) {
-            Ok(robots) => robots,
-            Err(_) => {
-                eprintln!("Unable to load data from {}", filename);
-                exit(1);
-            }
-        };
-
-        let mut blue_team_robots = Vec::with_capacity(3);
-        let mut red_team_robots = Vec::with_capacity(3);
-
-        Self {
-            dimensions,
-            blue_team_robots,
-            red_team_robots
-        }
-    }
+#[derive(Deserialize)]
+pub struct GoalDimensions {
+    pub length: f32,
+    pub height: f32,
+    pub depth: f32,
 }

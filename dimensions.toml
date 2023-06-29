@@ -1,26 +1,20 @@
 title = "Tiny-Cup Dimensions (mm)"
 
 [field_dimensions]
-width = 1500.0
-length = 900.0
-field_bevel_radius = 28.0
+width = 1050.0
+length = 1500.0
+corner_radius = 100.0
 center_circle_radius = 150.0
-behind_goal_width = 200.0
 
 [robot_max_dimensions]
-# These might be changed to 150.0, 150.0, 300.0
-max_length = 130.0
-max_width = 130.0
-max_height = 260.0
+max_length = 150.0
+max_width = 150.0
+max_height = 300.0
 
 [ball_dimensions]
 radius = 30.0
 
 [goal_dimensions]
-length = 300.0
+length = 500.0
 height = 300.0
-depth = 30.0
-
-[goal_zone_dimensions]
-# only the goalie is allowed in here
-radius = 150.0
+depth = 50.0
