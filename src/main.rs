@@ -2,13 +2,11 @@ use std::env;
 
 use eframe::egui;
 
-mod ui_node;
-use ui_node::{UINode, UIApp};
+mod ui;
+use ui::UIApp;
 
 mod field;
-
-mod field_state;
-use field_state::FieldStatePublisher;
+use field::FieldNode;
 
 mod parser;
 use parser::{get_dimensions, get_robots};
@@ -23,18 +21,10 @@ fn main() -> Result<(), eframe::Error> {
 
     image_generator::generate_images(args, &dimensions, &robots);
 
-    let mut field_state_publisher = FieldStatePublisher::new(
+    let mut field_node = FieldNode::new(
         dimensions.ball_dimensions.start_position,
-        [[10.0, 10.0], [200.0, 200.0]],
-        [[900.0, 900.0], [600.0, 600.0]],
-    );
-
-    let ui_node = UINode::new(
-        dimensions.field_dimensions.length,
-        dimensions.field_dimensions.width,
-        [[10.0, 10.0], [200.0, 200.0]],
-        [[900.0, 900.0], [600.0, 600.0]],
-        field_state_publisher.create_subscriber(),
+        robots.get_robot_positions(),
+        robots.get_robot_rotations(),
     );
 
     let options = eframe::NativeOptions {
@@ -42,14 +32,14 @@ fn main() -> Result<(), eframe::Error> {
         ..Default::default()
     };
 
+    let field_state_subscriber = field_node.create_field_subscriber();
     eframe::run_native(
         "Tiny-Cup",
         options,
         Box::new(|_cc| Box::new(
             UIApp::new(
                 dimensions,
-                50.0,
-                ui_node
+                field_state_subscriber,
             )
         )),
     )

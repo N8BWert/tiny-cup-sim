@@ -6,6 +6,7 @@ pub struct Dimensions {
     pub robot_max_dimensions: RobotMaxDimensions,
     pub ball_dimensions: BallDimensions,
     pub goal_dimensions: GoalDimensions,
+    pub ui_dimensions: UIDimensions,
 }
 
 #[derive(Deserialize, Clone)]

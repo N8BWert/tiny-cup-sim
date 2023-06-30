@@ -16,7 +16,7 @@ pub fn generate_images(args: Vec<String>, dimensions: &Dimensions, robots: &Robo
             field::create_field_sprite(dimensions.field_dimensions.length as u32, dimensions.field_dimensions.width as u32, dimensions.field_dimensions.corner_radius as u32, dimensions.goal_dimensions.depth as u32);
             field::create_field_collider(dimensions.field_dimensions.length as u32, dimensions.field_dimensions.width as u32, dimensions.field_dimensions.corner_radius as u32, dimensions.goal_dimensions.depth as u32);
 
-            for robot in robots.robot_states {
+            for robot in robots.robots {
                 match robot.shape {
                     Shape::Circle{ radius } => {
                         robot::create_circle_robot_sprite(robot.team, (radius * 2.0) as u32, robot.id);
