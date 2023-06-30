@@ -13,8 +13,13 @@ max_height = 300.0
 
 [ball_dimensions]
 radius = 30.0
+start_position = [525.0, 750.0]
 
 [goal_dimensions]
 length = 500.0
 height = 300.0
 depth = 50.0
+
+[ui_dimensions]
+length = 1000.0
+height = 1000.0

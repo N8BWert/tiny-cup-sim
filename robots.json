@@ -7,7 +7,9 @@
             "shape": {
                 "type": "Circle",
                 "radius": 150.0
-            }
+            },
+            "start_position": [100.0, 100.0],
+            "start_rotation": 0.0
         }, {
             "id": 1,
             "team": true,
@@ -15,7 +17,9 @@
             "shape": {
                 "type": "Circle",
                 "radius": 150.0
-            }
+            },
+            "start_position": [300.0, 300.0],
+            "start_rotation": 90.0
         }, {
             "id": 0,
             "team": false,
@@ -23,7 +27,9 @@
             "shape": {
                 "type": "Circle",
                 "radius": 120.0
-            }
+            },
+            "start_position": [500.0, 700.0],
+            "start_rotation": 180.0
         }, {
             "id": 1,
             "team": false,
@@ -31,7 +37,9 @@
             "shape": {
                 "type": "Circle",
                 "radius": 130.0
-            }
+            },
+            "start_position": [900.0, 500.0],
+            "start_rotation": 270.0
         }
     ]
 }

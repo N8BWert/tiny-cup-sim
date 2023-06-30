@@ -6,7 +6,7 @@ use eframe::{egui::{self, Rect, Button, Image}, epaint::{Pos2}};
 
 use egui_extras::RetainedImage;
 
-use crate::{field_state::FieldState, dimensions::Dimensions};
+use crate::{field_state::FieldState, parser::dimensions::Dimensions};
 
 #[derive(Debug, Clone)]
 pub enum State {
