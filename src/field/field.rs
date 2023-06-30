@@ -1,3 +1,5 @@
+use ndarray::{Array1, Array2, Axis};
+
 use super::robot::{Robot, RobotState};
 use super::ball::{Ball, BallState};
 
@@ -8,20 +10,32 @@ pub struct Field {
 }
 
 impl Field {
-    pub const fn new(
-        ball_position: [f32; 2],
-        robot_positions: [[f32; 2]; 4],
-        robot_rotations: [f32; 4],
+    pub fn new(
+        ball_position: Array1<f32>,
+        robot_positions: Array2<f32>,
+        robot_rotations: Array1<f32>,
     ) -> Self {
         Self {
             ball: Ball::new(ball_position),
             red_robots: [
-                Robot::new(robot_positions[0], robot_rotations[0]),
-                Robot::new(robot_positions[1], robot_rotations[1]),
+                Robot::new(
+                    robot_positions.index_axis(Axis(0), 0).to_owned(),
+                    robot_rotations.get(0).unwrap().to_owned(),
+                ),
+                Robot::new(
+                    robot_positions.index_axis(Axis(0), 1).to_owned(),
+                    robot_rotations.get(1).unwrap().to_owned(),
+                )
             ],
             blue_robots: [
-                Robot::new(robot_positions[2], robot_rotations[2]),
-                Robot::new(robot_positions[3], robot_rotations[3]),
+                Robot::new(
+                    robot_positions.index_axis(Axis(0), 2).to_owned(),
+                    robot_rotations.get(2).unwrap().to_owned()
+                ),
+                Robot::new(
+                    robot_positions.index_axis(Axis(0), 3).to_owned(),
+                    robot_rotations.get(3).unwrap().to_owned()
+                )
             ]
         }
     }
@@ -35,7 +49,7 @@ impl Field {
     }
 }
 
-#[derive(Copy, Clone, Debug)]
+#[derive(Clone, Debug)]
 pub struct FieldState {
     pub ball_state: BallState,
     pub red_robot_states: [RobotState; 2],

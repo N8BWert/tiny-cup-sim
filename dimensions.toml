@@ -21,5 +21,7 @@ height = 300.0
 depth = 50.0
 
 [ui_dimensions]
-length = 1000.0
-height = 1000.0
+length = 750.0
+height = 625.0
+button_height = 100.0
+multiplier = 0.5

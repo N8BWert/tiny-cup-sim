@@ -41,4 +41,6 @@ pub struct GoalDimensions {
 pub struct UIDimensions {
     pub length: f32,
     pub height: f32,
+    pub button_height: f32,
+    pub multiplier: f32,
 }

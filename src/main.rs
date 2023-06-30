@@ -3,7 +3,7 @@ use std::env;
 use eframe::egui;
 
 mod ui;
-use ui::UIApp;
+use ui::{UIApp, ui_node::UINode};
 
 mod field;
 use field::FieldNode;
@@ -28,18 +28,21 @@ fn main() -> Result<(), eframe::Error> {
     );
 
     let options = eframe::NativeOptions {
-        initial_window_size: Some(egui::vec2(dimensions.field_dimensions.length, dimensions.field_dimensions.width + 50.0)),
+        initial_window_size: Some(egui::vec2(dimensions.ui_dimensions.length, dimensions.ui_dimensions.height)),
         ..Default::default()
     };
 
-    let field_state_subscriber = field_node.create_field_subscriber();
+    let mut ui_node = UINode::new(field_node.create_field_subscriber());
+
+    field_node.add_state_subscriber(ui_node.create_state_subscriber());
+
     eframe::run_native(
         "Tiny-Cup",
         options,
         Box::new(|_cc| Box::new(
             UIApp::new(
                 dimensions,
-                field_state_subscriber,
+                ui_node,
             )
         )),
     )

@@ -10,17 +10,24 @@ mod robot;
 pub fn generate_images(args: Vec<String>, dimensions: &Dimensions, robots: &RobotInit) {
     if let Ok(b) = ensure_file_structure() {
         if b || args.len() >= 2 && args[1] == "build" {
-            ball::create_ball_sprite(dimensions.ball_dimensions.radius as u32);
-            ball::create_ball_collider(dimensions.ball_dimensions.radius as u32);
-            goal::create_goal_sprites(dimensions.goal_dimensions.length as u32, dimensions.goal_dimensions.depth as u32);
-            field::create_field_sprite(dimensions.field_dimensions.length as u32, dimensions.field_dimensions.width as u32, dimensions.field_dimensions.corner_radius as u32, dimensions.goal_dimensions.depth as u32);
-            field::create_field_collider(dimensions.field_dimensions.length as u32, dimensions.field_dimensions.width as u32, dimensions.field_dimensions.corner_radius as u32, dimensions.goal_dimensions.depth as u32);
+            ball::create_ball_sprite((dimensions.ball_dimensions.radius * dimensions.ui_dimensions.multiplier) as u32);
+            ball::create_ball_collider((dimensions.ball_dimensions.radius * dimensions.ui_dimensions.multiplier) as u32);
+            goal::create_goal_sprites((dimensions.goal_dimensions.length * dimensions.ui_dimensions.multiplier) as u32,
+                (dimensions.goal_dimensions.depth * dimensions.ui_dimensions.multiplier) as u32);
+            field::create_field_sprite((dimensions.field_dimensions.length * dimensions.ui_dimensions.multiplier) as u32,
+                (dimensions.field_dimensions.width * dimensions.ui_dimensions.multiplier) as u32,
+                (dimensions.field_dimensions.corner_radius * dimensions.ui_dimensions.multiplier) as u32,
+                (dimensions.goal_dimensions.depth * dimensions.ui_dimensions.multiplier) as u32);
+            field::create_field_collider((dimensions.field_dimensions.length * dimensions.ui_dimensions.multiplier) as u32,
+                (dimensions.field_dimensions.width * dimensions.ui_dimensions.multiplier) as u32,
+                (dimensions.field_dimensions.corner_radius * dimensions.ui_dimensions.multiplier) as u32,
+                (dimensions.goal_dimensions.depth * dimensions.ui_dimensions.multiplier) as u32);
 
-            for robot in robots.robots {
+            for robot in robots.robots.as_ref() {
                 match robot.shape {
                     Shape::Circle{ radius } => {
-                        robot::create_circle_robot_sprite(robot.team, (radius * 2.0) as u32, robot.id);
-                        robot::create_circle_robot_collider(robot.team, (radius * 2.0) as u32, robot.id)
+                        robot::create_circle_robot_sprite(robot.team, (radius * dimensions.ui_dimensions.multiplier * 2.0) as u32, robot.id);
+                        robot::create_circle_robot_collider(robot.team, (radius * dimensions.ui_dimensions.multiplier * 2.0) as u32, robot.id)
                     }
                 }
             }

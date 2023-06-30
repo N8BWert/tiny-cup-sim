@@ -1,33 +1,35 @@
 use serde_derive::{Serialize, Deserialize};
 
-#[derive(Serialize, Deserialize, Clone, Copy)]
+use ndarray::prelude::*;
+use ndarray::{stack, Axis};
+
+#[derive(Serialize, Deserialize, Clone)]
 pub struct RobotInit {
     pub robots: [Robot; 4],
 }
 
 impl RobotInit {
-    pub fn get_robot_positions(&self) -> [[f32; 2]; 4] {
-        let mut robot_positions = [[0f32; 2]; 4];
-
-        for robot in self.robots {
-            robot_positions[robot.id as usize] = robot.start_position;
-        }
-
-        robot_positions
+    pub fn get_robot_positions(&self) -> Array2<f32> {
+        stack![
+            Axis(0),
+            self.robots[0].start_position,
+            self.robots[1].start_position,
+            self.robots[2].start_position,
+            self.robots[3].start_position,
+        ]
     }
 
-    pub fn get_robot_rotations(&self) -> [f32; 4] {
-        let mut robot_rotations = [0f32; 4];
-
-        for robot in self.robots {
-            robot_rotations[robot.id as usize] = robot.start_rotation;
-        }
-
-        robot_rotations
+    pub fn get_robot_rotations(&self) -> Array1<f32> {
+        array![
+            self.robots[0].start_rotation,
+            self.robots[1].start_rotation,
+            self.robots[2].start_rotation,
+            self.robots[3].start_rotation,
+        ]
     }
 }
 
-#[derive(Serialize, Deserialize, Clone, Copy)]
+#[derive(Serialize, Deserialize, Clone)]
 pub struct Robot {
     pub id: u8,
     pub team: bool,
