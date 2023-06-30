@@ -1,8 +1,6 @@
 use ncomm::{node::Node, publisher_subscriber::{local::{LocalSubscriber, LocalPublisher}, Receive, Subscribe, Publish}};
 
-use ndarray::array;
-
-use crate::field::{field::FieldState, robot::RobotState, ball::BallState};
+use crate::field::{field::FieldState};
 
 #[derive(Copy, Clone, Debug)]
 pub enum State {
