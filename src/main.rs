@@ -3,6 +3,7 @@ use std::env;
 use eframe::egui;
 
 mod ui;
+use ncomm::node::Node;
 use ui::{UIApp, ui_node::UINode};
 
 mod field;
@@ -35,6 +36,9 @@ fn main() -> Result<(), eframe::Error> {
     let mut ui_node = UINode::new(field_node.create_field_subscriber());
 
     field_node.add_state_subscriber(ui_node.create_state_subscriber());
+
+    field_node.start();
+    field_node.update();
 
     eframe::run_native(
         "Tiny-Cup",

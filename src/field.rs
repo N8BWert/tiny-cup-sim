@@ -2,9 +2,9 @@ use ncomm::{node::Node, publisher_subscriber::{local::{LocalPublisher, LocalSubs
 
 use ndarray::{Array1, Array2, array};
 
-mod robot;
+pub mod robot;
 
-mod ball;
+pub mod ball;
 
 pub mod field;
 use field::{Field, FieldState};

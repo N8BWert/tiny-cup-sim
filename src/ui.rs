@@ -6,6 +6,8 @@ use eframe::{egui::{self, Rect, Button, Image}, epaint::{Pos2}};
 
 use egui_extras::RetainedImage;
 
+use ndarray::{array, Array1};
+
 use crate::parser::dimensions::Dimensions;
 use crate::field::field::FieldState;
 
@@ -173,27 +175,34 @@ impl eframe::App for UIApp {
                 Image::new(self.blue_goal_sprite.texture_id(ctx), self.blue_goal_sprite.size_vec2())
             );
 
-            // Draw the red robots
-            for red_robot in self.red_robot_sprites.as_ref() {
+            if let Some(field_state) = self.node.field_state_subscriber.data.as_ref() {
+                let midpoint: Array1<f32> = array![
+                    self.dimensions.field_dimensions.length * self.dimensions.ui_dimensions.multiplier / 2.0,
+                    self.dimensions.ui_dimensions.button_height + self.dimensions.field_dimensions.width * self.dimensions.ui_dimensions.multiplier / 2.0,
+                ];
+
+                // Draw the red robots
+                for red_robot in self.red_robot_sprites.as_ref() {
+                    ui.put(
+                        Rect::from_two_pos(Pos2::new(0.0, 0.0), Pos2::new(100.0, 100.0)),
+                        Image::new(red_robot.texture_id(ctx), red_robot.size_vec2())
+                    );
+                }
+
+                // Draw the blue robots
+                for blue_robot in self.blue_robot_sprites.as_ref() {
+                    ui.put(
+                        Rect::from_two_pos(Pos2::new(0.0, 0.0), Pos2::new(10.0, 10.0)),
+                        Image::new(blue_robot.texture_id(ctx), blue_robot.size_vec2())
+                    );
+                }
+
+                // Draw the ball
                 ui.put(
-                    Rect::from_two_pos(Pos2::new(0.0, 0.0), Pos2::new(100.0, 100.0)),
-                    Image::new(red_robot.texture_id(ctx), red_robot.size_vec2())
+                    field_state.ball_state.get_rect(&self.dimensions, &midpoint),
+                    Image::new(self.ball_sprite.texture_id(ctx), self.ball_sprite.size_vec2())
                 );
             }
-
-            // Draw the blue robots
-            for blue_robot in self.blue_robot_sprites.as_ref() {
-                ui.put(
-                    Rect::from_two_pos(Pos2::new(0.0, 0.0), Pos2::new(10.0, 10.0)),
-                    Image::new(blue_robot.texture_id(ctx), blue_robot.size_vec2())
-                );
-            }
-
-            // Draw the ball
-            ui.put(
-                Rect::from_two_pos(Pos2::new(0.0, 0.0), Pos2::new(0.0, 0.0)),
-                Image::new(self.ball_sprite.texture_id(ctx), self.ball_sprite.size_vec2())
-            );
         });
     }
 }

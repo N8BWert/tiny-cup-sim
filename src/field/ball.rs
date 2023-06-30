@@ -30,17 +30,21 @@ pub struct BallState {
 }
 
 impl BallState {
-    pub fn get_rect(&self, dimensions: &Dimensions) -> Rect {
+    pub fn get_rect(&self, dimensions: &Dimensions, midpoint: &Array1<f32>) -> Rect {
+        let point = self.position.clone() * dimensions.ui_dimensions.multiplier;
+        let screen_point = point + midpoint;
 
+        let left_point = &screen_point - array![dimensions.ball_dimensions.radius, dimensions.ball_dimensions.radius];
+        let right_point = screen_point + array![dimensions.ball_dimensions.radius, dimensions.ball_dimensions.radius];
 
         let left_point = Pos2::new(
-            (self.position[0] - dimensions.ball_dimensions.radius) * dimensions.ui_dimensions.multiplier,
-            0.0,
+            left_point.get(0).unwrap().to_owned(),
+            left_point.get(1).unwrap().to_owned(),
         );
 
         let right_point = Pos2::new(
-            100.0,
-            100.0,
+            right_point.get(0).unwrap().to_owned(),
+            right_point.get(1).unwrap().to_owned(),
         );
 
         Rect::from_two_pos(left_point, right_point)
