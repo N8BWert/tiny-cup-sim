@@ -1,15 +1,24 @@
 use std::{env, fs, process::exit, path::Path};
+use eframe::egui;
 
 mod image_generate;
 
-mod field;
-use field::Dimensions;
+mod dimensions;
+use dimensions::Dimensions;
 
+use field_state::FieldStatePublisher;
 use robots::{Robots, Shape};
+use ui_node::UINode;
 
 mod robots;
 
-fn main() {
+mod ui_node;
+use ui_node::UIApp;
+
+mod field;
+mod field_state;
+
+fn main() -> Result<(), eframe::Error> {
     let args: Vec<_> = env::args().collect();
 
     let dimensions = get_dimensions();
@@ -34,6 +43,37 @@ fn main() {
             }
         }
     }
+
+    let mut field_state_publisher = FieldStatePublisher::new(
+        [400.0, 400.0],
+        [[10.0, 10.0], [200.0, 200.0]],
+        [[900.0, 900.0], [600.0, 600.0]],
+    );
+
+    let ui_node = UINode::new(
+        dimensions.field_dimensions.length,
+        dimensions.field_dimensions.width,
+        [[10.0, 10.0], [200.0, 200.0]],
+        [[900.0, 900.0], [600.0, 600.0]],
+        field_state_publisher.create_subscriber(),
+    );
+
+    let options = eframe::NativeOptions {
+        initial_window_size: Some(egui::vec2(dimensions.field_dimensions.length, dimensions.field_dimensions.width + 50.0)),
+        ..Default::default()
+    };
+
+    eframe::run_native(
+        "Tiny-Cup",
+        options,
+        Box::new(|_cc| Box::new(
+            UIApp::new(
+                dimensions,
+                50.0,
+                ui_node
+            )
+        )),
+    )
 }
 
 fn get_dimensions() -> Dimensions {
