@@ -9,7 +9,6 @@ use egui_extras::RetainedImage;
 use ndarray::{array, Array1};
 
 use crate::parser::dimensions::Dimensions;
-use crate::field::field::FieldState;
 
 pub mod ui_node;
 use ui_node::{State, UINode};
@@ -182,20 +181,18 @@ impl eframe::App for UIApp {
                 ];
 
                 // Draw the red robots
-                for red_robot in self.red_robot_sprites.as_ref() {
-                    ui.put(
-                        Rect::from_two_pos(Pos2::new(0.0, 0.0), Pos2::new(100.0, 100.0)),
-                        Image::new(red_robot.texture_id(ctx), red_robot.size_vec2())
-                    );
-                }
+                ui.put(field_state.red_robot_states[0].get_rect(&self.dimensions, &midpoint),
+                    Image::new(self.red_robot_sprites[0].texture_id(ctx), self.red_robot_sprites[0].size_vec2()));
+
+                ui.put(field_state.red_robot_states[1].get_rect(&self.dimensions, &midpoint),
+                    Image::new(self.red_robot_sprites[1].texture_id(ctx), self.red_robot_sprites[1].size_vec2()));
 
                 // Draw the blue robots
-                for blue_robot in self.blue_robot_sprites.as_ref() {
-                    ui.put(
-                        Rect::from_two_pos(Pos2::new(0.0, 0.0), Pos2::new(10.0, 10.0)),
-                        Image::new(blue_robot.texture_id(ctx), blue_robot.size_vec2())
-                    );
-                }
+                ui.put(field_state.blue_robot_states[0].get_rect(&self.dimensions, &midpoint),
+                    Image::new(self.blue_robot_sprites[0].texture_id(ctx), self.blue_robot_sprites[0].size_vec2()));
+
+                ui.put(field_state.blue_robot_states[1].get_rect(&self.dimensions, &midpoint),
+                    Image::new(self.blue_robot_sprites[1].texture_id(ctx), self.blue_robot_sprites[1].size_vec2()));
 
                 // Draw the ball
                 ui.put(

@@ -9,7 +9,7 @@ pub mod ball;
 pub mod field;
 use field::{Field, FieldState};
 
-use crate::ui::ui_node::State;
+use crate::{ui::ui_node::State, parser::robot_init::Shape};
 
 pub struct FieldNode {
     field: Field,
@@ -22,9 +22,10 @@ impl FieldNode {
         ball_position: [f32; 2],
         robot_positions: Array2<f32>,
         robot_rotations: Array1<f32>,
+        robot_shapes: [Shape; 4],
     ) -> Self {
         Self {
-            field: Field::new(array![ball_position[0], ball_position[1]], robot_positions, robot_rotations),
+            field: Field::new(array![ball_position[0], ball_position[1]], robot_positions, robot_rotations, robot_shapes),
             field_state_publisher: LocalPublisher::new(),
             state_subscriber: None,
         }

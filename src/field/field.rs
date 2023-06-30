@@ -1,5 +1,7 @@
 use ndarray::{Array1, Array2, Axis};
 
+use crate::parser::robot_init::Shape;
+
 use super::robot::{Robot, RobotState};
 use super::ball::{Ball, BallState};
 
@@ -14,6 +16,7 @@ impl Field {
         ball_position: Array1<f32>,
         robot_positions: Array2<f32>,
         robot_rotations: Array1<f32>,
+        robot_shapes: [Shape; 4],
     ) -> Self {
         Self {
             ball: Ball::new(ball_position),
@@ -21,20 +24,24 @@ impl Field {
                 Robot::new(
                     robot_positions.index_axis(Axis(0), 0).to_owned(),
                     robot_rotations.get(0).unwrap().to_owned(),
+                    robot_shapes[0],
                 ),
                 Robot::new(
                     robot_positions.index_axis(Axis(0), 1).to_owned(),
                     robot_rotations.get(1).unwrap().to_owned(),
+                    robot_shapes[1],
                 )
             ],
             blue_robots: [
                 Robot::new(
                     robot_positions.index_axis(Axis(0), 2).to_owned(),
-                    robot_rotations.get(2).unwrap().to_owned()
+                    robot_rotations.get(2).unwrap().to_owned(),
+                    robot_shapes[2],
                 ),
                 Robot::new(
                     robot_positions.index_axis(Axis(0), 3).to_owned(),
-                    robot_rotations.get(3).unwrap().to_owned()
+                    robot_rotations.get(3).unwrap().to_owned(),
+                    robot_shapes[3],
                 )
             ]
         }

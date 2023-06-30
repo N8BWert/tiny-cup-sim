@@ -26,6 +26,7 @@ fn main() -> Result<(), eframe::Error> {
         dimensions.ball_dimensions.start_position,
         robots.get_robot_positions(),
         robots.get_robot_rotations(),
+        robots.get_robot_shapes(),
     );
 
     let options = eframe::NativeOptions {

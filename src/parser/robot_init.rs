@@ -3,7 +3,7 @@ use serde_derive::{Serialize, Deserialize};
 use ndarray::prelude::*;
 use ndarray::{stack, Axis};
 
-#[derive(Serialize, Deserialize, Clone)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct RobotInit {
     pub robots: [Robot; 4],
 }
@@ -27,9 +27,18 @@ impl RobotInit {
             self.robots[3].start_rotation,
         ]
     }
+
+    pub fn get_robot_shapes(&self) -> [Shape; 4] {
+        [
+            self.robots[0].shape,
+            self.robots[1].shape,
+            self.robots[2].shape,
+            self.robots[3].shape,
+        ]
+    }
 }
 
-#[derive(Serialize, Deserialize, Clone)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct Robot {
     pub id: u8,
     pub team: bool,
@@ -39,7 +48,7 @@ pub struct Robot {
     pub start_rotation: f32,
 }
 
-#[derive(Serialize, Deserialize, Clone, Copy)]
+#[derive(Serialize, Deserialize, Clone, Copy, Debug)]
 #[serde(tag = "type")]
 pub enum Shape {
     Circle { radius: f32 },

@@ -13,7 +13,7 @@ max_height = 300.0
 
 [ball_dimensions]
 radius = 30.0
-start_position = [-100.0, -300.0]
+start_position = [0.0, 0.0]
 
 [goal_dimensions]
 length = 500.0
