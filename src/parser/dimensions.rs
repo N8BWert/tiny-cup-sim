@@ -1,4 +1,4 @@
-use serde_derive::{Deserialize};
+use serde_derive::Deserialize;
 
 #[derive(Deserialize, Clone)]
 pub struct Dimensions {

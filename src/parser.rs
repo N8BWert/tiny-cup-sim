@@ -6,6 +6,9 @@ use dimensions::Dimensions;
 pub mod robot_init;
 use robot_init::RobotInit;
 
+pub mod configuration;
+use configuration::Configuration;
+
 pub fn get_dimensions() -> Dimensions {
     let filename = "dimensions.toml";
 
@@ -48,4 +51,26 @@ pub fn get_robots() -> RobotInit {
     };
 
     return robots;
+}
+
+pub fn get_configuration() -> Configuration {
+    let filename = "Config.toml";
+
+    let contents = match fs::read_to_string(filename) {
+        Ok(file) => file,
+        Err(_) => {
+            eprintln!("Could not read file {}", filename);
+            exit(1);
+        }
+    };
+
+    let configuration: Configuration = match toml::from_str(contents.as_str()) {
+        Ok(configuration) => configuration,
+        Err(_) => {
+            eprintln!("Unable to load data from {}", filename);
+            exit(1);
+        }
+    };
+
+    return configuration;
 }

@@ -1,0 +1,9 @@
+title = "Simulator Configuration"
+
+[blue_team.network_configuration]
+bind_address = "127.0.0.1:8000"
+listen_address = "127.0.0.1:8001"
+
+[red_team.network_configuration]
+bind_address = "127.0.0.1:8002"
+listen_address = "127.0.0.1:8003"

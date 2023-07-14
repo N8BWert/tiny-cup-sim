@@ -10,7 +10,7 @@ mod field;
 use field::FieldNode;
 
 mod parser;
-use parser::{get_dimensions, get_robots};
+use parser::{get_dimensions, get_robots, get_configuration};
 
 mod image_generator;
 
@@ -19,6 +19,7 @@ fn main() -> Result<(), eframe::Error> {
 
     let dimensions = get_dimensions();
     let robots = get_robots();
+    let configuration = get_configuration();
 
     image_generator::generate_images(args, &dimensions, &robots);
 
@@ -27,6 +28,8 @@ fn main() -> Result<(), eframe::Error> {
         robots.get_robot_positions(),
         robots.get_robot_rotations(),
         robots.get_robot_shapes(),
+        &configuration.blue_team,
+        &configuration.red_team
     );
 
     let options = eframe::NativeOptions {

@@ -1,6 +1,6 @@
 use ncomm::{node::Node, publisher_subscriber::{local::{LocalSubscriber, LocalPublisher}, Receive, Subscribe, Publish}};
 
-use crate::field::{field::FieldState};
+use crate::field::field::FieldState;
 
 #[derive(Copy, Clone, Debug)]
 pub enum State {
@@ -25,10 +25,6 @@ impl UINode {
 
     pub fn create_state_subscriber(&mut self) -> LocalSubscriber<State> {
         self.state_publisher.create_subscriber()
-    }
-
-    pub fn publish_state(&mut self, state: State) {
-        self.state_publisher.send(state);
     }
 }
 

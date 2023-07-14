@@ -2,7 +2,7 @@ use std::{path::Path, process::exit};
 
 use ncomm::{node::Node, publisher_subscriber::Publish};
 
-use eframe::{egui::{self, Rect, Button, Image}, epaint::{Pos2}};
+use eframe::{egui::{self, Rect, Button, Image}, epaint::Pos2};
 
 use egui_extras::RetainedImage;
 
@@ -140,18 +140,22 @@ impl eframe::App for UIApp {
 
             if ui.put(Rect::from_two_pos(Pos2::new(0.0, 0.0), Pos2::new(button_width, button_height)), Button::new("▶️")).clicked() {
                 self.node.state_publisher.send(State::Play);
+                println!("Current State: Play");
             }
 
             if ui.put(Rect::from_two_pos(Pos2::new(2.0 * button_width, 0.0), Pos2::new(3.0 * button_width, button_height)), Button::new("⏸️")).clicked() {
                 self.node.state_publisher.send(State::Pause);
+                println!("Current State: Pause");
             }
 
             if ui.put(Rect::from_two_pos(Pos2::new(4.0 * button_width, 0.0), Pos2::new(5.0 * button_width, button_height)), Button::new("⏹️")).clicked() {
                 self.node.state_publisher.send(State::Stop);
+                println!("Current State: Stop");
             }
 
             if ui.put(Rect::from_two_pos(Pos2::new(6.0 * button_width, 0.0), Pos2::new(7.0 * button_width, button_height)), Button::new("🔄")).clicked() {
                 self.node.state_publisher.send(State::Restart);
+                println!("Current State: Restart");
             }
 
             // Draw the background
